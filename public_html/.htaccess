@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteBase /
+
+# Перенаправляем все запросы на index.php (кроме реальных файлов/папок)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Дополнительно: блокируем прямой доступ к .php в публичной зоне (кроме index.php)
+RewriteCond %{REQUEST_URI} \.php$ [NC]
+RewriteCond %{REQUEST_URI} !/index\.php$ [NC]
+RewriteRule ^ - [R=404,L]
